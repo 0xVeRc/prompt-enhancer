@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Enhancer</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen flex flex-col items-center">
+    <header class="w-full py-12 flex justify-center relative z-10">
+        <div class="container px-4 md:px-6 flex flex-col items-center">
+            <h1 class="app-title">Prompt Enhancer</h1>
+            <p class="app-subtitle">Transform your ideas into powerful prompts</p>
+            <button id="settings-button" class="absolute right-6 top-6 p-3 text-gray-400 hover:text-gray-200 focus:outline-none glass-card">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow w-full flex flex-col items-center justify-center p-4 relative z-10">
+        <div class="container max-w-3xl">
+            <div class="glass-card p-8 md:p-10 mb-8">
+                <div class="mb-8">
+                    <label for="original-prompt" class="block text-base font-medium mb-2">Your Prompt</label>
+                    <textarea 
+                        id="original-prompt" 
+                        rows="5" 
+                        class="w-full"
+                        placeholder="Enter your prompt here..."
+                    ></textarea>
+                </div>
+                
+                <div class="flex justify-center">
+                    <button 
+                        id="enhance-button"
+                        class="enhance-button flex items-center justify-center group"
+                    >
+                        <span class="relative z-10">Enhance</span>
+                        <svg class="ml-2 w-5 h-5 relative z-10 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div id="result-container" class="glass-card p-8 md:p-10 hidden transform transition-all duration-300">
+                <div class="mb-4 flex justify-between items-center">
+                    <label class="block text-base font-medium">Enhanced Prompt</label>
+                    <button 
+                        id="copy-button"
+                        class="text-sm text-primary-light hover:text-white flex items-center transition-colors"
+                    >
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+                        </svg>
+                        Copy to clipboard
+                    </button>
+                </div>
+                <div id="enhanced-prompt" class="w-full p-4 bg-opacity-10 bg-white backdrop-blur-sm rounded-xl text-gray-100 min-h-[120px]"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="w-full py-6 relative z-10">
+        <div class="container px-4 md:px-6 mx-auto">
+            <p class="text-center text-gray-400 text-sm">
+                &copy; 2025 Prompt Enhancer | 
+                <a href="https://github.com/0xVeRc/prompt-enhancer" class="text-primary-light hover:text-white transition-colors">GitHub</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="settings-modal fixed inset-0 flex items-center justify-center z-50 hidden">
+        <div class="settings-content max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-semibold">Settings</h3>
+                <button id="close-settings" class="text-gray-400 hover:text-white focus:outline-none transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium mb-2">API Provider</label>
+                    <select id="api-provider" class="w-full">
+                        <option value="openai">OpenAI (GPT-4)</option>
+                        <option value="anthropic">Anthropic (Claude)</option>
+                        <option value="custom">Custom API</option>
+                    </select>
+                </div>
+                
+                <div id="openai-settings" class="api-settings space-y-4">
+                    <div>
+                        <label for="openai-api-key" class="block text-sm font-medium mb-2">OpenAI API Key</label>
+                        <input 
+                            type="password" 
+                            id="openai-api-key" 
+                            class="w-full"
+                            placeholder="sk-..."
+                        >
+                        <p class="text-xs text-gray-400 mt-1">Your API key is stored locally and never sent to our servers.</p>
+                    </div>
+                    
+                    <div>
+                        <label for="openai-model" class="block text-sm font-medium mb-2">Model</label>
+                        <select id="openai-model" class="w-full">
+                            <option value="gpt-4">GPT-4</option>
+                            <option value="gpt-4-turbo">GPT-4 Turbo</option>
+                            <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="anthropic-settings" class="api-settings space-y-4 hidden">
+                    <div>
+                        <label for="anthropic-api-key" class="block text-sm font-medium mb-2">Anthropic API Key</label>
+                        <input 
+                            type="password" 
+                            id="anthropic-api-key" 
+                            class="w-full"
+                            placeholder="sk_ant_..."
+                        >
+                    </div>
+                    
+                    <div>
+                        <label for="anthropic-model" class="block text-sm font-medium mb-2">Model</label>
+                        <select id="anthropic-model" class="w-full">
+                            <option value="claude-3-opus-20240229">Claude 3 Opus</option>
+                            <option value="claude-3-sonnet-20240229">Claude 3 Sonnet</option>
+                            <option value="claude-3-haiku-20240307">Claude 3 Haiku</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="custom-settings" class="api-settings space-y-4 hidden">
+                    <div>
+                        <label for="custom-api-url" class="block text-sm font-medium mb-2">API URL</label>
+                        <input 
+                            type="text" 
+                            id="custom-api-url" 
+                            class="w-full"
+                            placeholder="https://your-api-endpoint.com/v1/completions"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label for="custom-api-key" class="block text-sm font-medium mb-2">API Key (optional)</label>
+                        <input 
+                            type="password" 
+                            id="custom-api-key" 
+                            class="w-full"
+                            placeholder="Your API key"
+                        >
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 flex justify-end">
+                <button id="save-settings" class="enhance-button">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="config.js"></script>
+    <script type="module" src="validation-service.js"></script>
+    <script type="module" src="api-service.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>
