@@ -162,8 +162,8 @@ textarea::placeholder, input::placeholder {
     width: 24px;
     height: 24px;
     border: 3px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
     border-top-color: white;
+    border-radius: 50%;
     animation: spin 1s cubic-bezier(0.76, 0.35, 0.2, 0.75) infinite;
 }
 
@@ -260,4 +260,53 @@ textarea::placeholder, input::placeholder {
     .app-title {
         font-size: 2.5rem;
     }
+}
+
+/* History section */
+#history-list {
+    max-height: 500px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #64ffda #112240;
+}
+
+#history-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+#history-list::-webkit-scrollbar-track {
+    background: #112240;
+    border-radius: 4px;
+}
+
+#history-list::-webkit-scrollbar-thumb {
+    background: #64ffda;
+    border-radius: 4px;
+}
+
+.history-item {
+    transition: transform 0.2s ease;
+}
+
+.history-item:hover {
+    transform: translateX(4px);
+}
+
+.reuse-prompt {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.reuse-prompt:hover svg {
+    transform: translateX(2px);
+}
+
+.delete-history {
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.delete-history:hover {
+    opacity: 1;
 }
