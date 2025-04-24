@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Enhancer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-buttons">
+            <button id="settings-button" class="icon-button" title="Settings">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/>
+                    <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>
+                </svg>
+            </button>
+            <button id="history-button" class="icon-button" title="History">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+            </button>
+        </div>
+        <h1 class="app-title">Prompt Enhancer</h1>
+    </div>
+
+    <div class="main-content">
+        <div class="input-section glass-card">
+            <textarea id="original-prompt" placeholder="Enter your prompt here..." rows="4"></textarea>
+            <button id="enhance-button" class="enhance-button group">
+                <span class="relative z-10">Enhance</span>
+                <svg class="ml-2 w-5 h-5 relative z-10 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </div>
+
+        <div id="result-container" class="result-section glass-card hidden">
+            <div class="result-header">
+                <h3>Enhanced Prompt</h3>
+                <button id="copy-button" class="icon-button" title="Copy to clipboard">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="enhanced-prompt" class="result-text"></div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button id="close-settings" class="icon-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="settings-form">
+                <div class="form-group">
+                    <label for="api-provider">API Provider</label>
+                    <select id="api-provider">
+                        <option value="openai">OpenAI</option>
+                        <option value="anthropic">Anthropic</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+
+                <div id="openai-settings" class="api-settings">
+                    <div class="form-group">
+                        <label for="openai-api-key">OpenAI API Key</label>
+                        <input type="password" id="openai-api-key" placeholder="sk-...">
+                    </div>
+                    <div class="form-group">
+                        <label for="openai-model">Model</label>
+                        <select id="openai-model">
+                            <option value="gpt-4">GPT-4</option>
+                            <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="anthropic-settings" class="api-settings hidden">
+                    <div class="form-group">
+                        <label for="anthropic-api-key">Anthropic API Key</label>
+                        <input type="password" id="anthropic-api-key" placeholder="sk-ant-...">
+                    </div>
+                    <div class="form-group">
+                        <label for="anthropic-model">Model</label>
+                        <select id="anthropic-model">
+                            <option value="claude-2">Claude 2</option>
+                            <option value="claude-instant">Claude Instant</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="custom-settings" class="api-settings hidden">
+                    <div class="form-group">
+                        <label for="custom-api-key">API Key (Optional)</label>
+                        <input type="password" id="custom-api-key" placeholder="Your API key">
+                    </div>
+                    <div class="form-group">
+                        <label for="custom-api-url">API URL</label>
+                        <input type="text" id="custom-api-url" placeholder="https://api.example.com/v1/chat">
+                    </div>
+                </div>
+
+                <button id="save-settings" class="enhance-button">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Modal -->
+    <div id="history-modal" class="modal hidden">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h2>History</h2>
+                <div class="modal-header-buttons">
+                    <button id="clear-history" class="text-button">Clear All</button>
+                    <button id="close-history" class="icon-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="history-list" class="history-list"></div>
+        </div>
+    </div>
+
+    <script src="popup.js" type="module"></script>
+</body>
+</html>

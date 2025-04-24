@@ -39,3 +39,5 @@ Thumbs.db
 # API keys and secrets
 api-keys.js
 secrets.js
+
+.vercel

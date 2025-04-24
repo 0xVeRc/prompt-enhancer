@@ -4,7 +4,9 @@
     {
       "src": "package.json",
       "use": "@vercel/static-build",
-      "config": { "zeroConfig": true }
+      "config": {
+        "distDir": "dist"
+      }
     }
   ],
   "routes": [
@@ -12,8 +14,5 @@
       "src": "/(.*)",
       "dest": "/$1"
     }
-  ],
-  "github": {
-    "silent": true
-  }
+  ]
 }
