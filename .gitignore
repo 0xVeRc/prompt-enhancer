@@ -33,11 +33,23 @@ logs
 *.njsproj
 *.sln
 *.sw?
-.DS_Store
-Thumbs.db
 
 # API keys and secrets
 api-keys.js
 secrets.js
 
+# Local deployment files
 .vercel
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Cache directories
+.cache/
+.parcel-cache/
