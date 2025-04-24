@@ -2,6 +2,8 @@
 
 A modern tool that helps you enhance your prompts for better AI interactions. Available as both a web application and a browser extension.
 
+**🌐 [Live Demo](https://prompt-enhancer-liart.vercel.app/)** - Try it now without installation!
+
 ## Features
 
 - **Clean, Minimalist Interface**: A distraction-free environment focused on your prompt
